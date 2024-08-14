@@ -75,21 +75,23 @@ const Weather = () => {
     }
   };
 
-  //This will be executed when we click enter in our keyboard
-  const handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      searchRef.current.click(); // Trigger the click event on the search icon
-      dismissKeyboard(); // Attempt to dismiss the keyboard
-    }
-  };
+
 
   // Function to trigger a click event outside of the input
+  //For Search icon
   const dismissKeyboard = () => {
     const tempElement = document.createElement("div");
     document.body.appendChild(tempElement);
     tempElement.focus();
     document.body.removeChild(tempElement);
   };
+
+  //This will be executed when we click enter in our keyboard
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+        e.target.blur();
+    }
+};
 
   useEffect(() => {
     search("New Delhi");
@@ -102,7 +104,7 @@ const Weather = () => {
           type="text"
           ref={inputRef}
           placeholder="Enter your city name"
-          onKeyUp={handleKeyPress}
+          onKeyDown={handleKeyDown}
         />
         <img
           src={search_icon}
