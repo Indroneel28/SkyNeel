@@ -75,8 +75,6 @@ const Weather = () => {
     }
   };
 
-
-
   // Function to trigger a click event outside of the input
   //For Search icon
   const dismissKeyboard = () => {
@@ -88,10 +86,11 @@ const Weather = () => {
 
   //This will be executed when we click enter in our keyboard
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-        e.target.blur();
+    if (e.key === "Enter") {
+      search(inputRef.current.value.trim());
+      e.target.blur();
     }
-};
+  };
 
   useEffect(() => {
     search("New Delhi");
