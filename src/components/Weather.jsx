@@ -14,7 +14,7 @@ import { useEffect, useState, useRef } from "react";
 
 const Weather = () => {
   const inputRef = useRef();
-  const searchRef= useRef();
+  const searchRef = useRef();
 
   const [weatherData, setWeatherData] = useState(false);
 
@@ -50,14 +50,12 @@ const Weather = () => {
       const response = await fetch(url);
       const data = await response.json();
 
-
-      if(!response.ok){
+      if (!response.ok) {
         alert(data.message);
         return;
       }
 
-
-      console.log(data);
+      //console.log(data);
       const icon = allIcons[data.weather[0].icon] || clear_icon;
       setWeatherData({
         humidity: data.main.humidity,
@@ -67,11 +65,13 @@ const Weather = () => {
         icon: icon,
 
         visibility: data.visibility,
-        feels_like: data.main.feels_like
+        feels_like: data.main.feels_like,
       });
     } catch (error) {
       setWeatherData(false);
       console.error("Error in fetching weather data:", error);
+    } finally {
+      dismissKeyboard(); // Attempt to dismiss the keyboard
     }
   };
 
@@ -79,7 +79,16 @@ const Weather = () => {
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       searchRef.current.click(); // Trigger the click event on the search icon
+      dismissKeyboard(); // Attempt to dismiss the keyboard
     }
+  };
+
+  // Function to trigger a click event outside of the input
+  const dismissKeyboard = () => {
+    const tempElement = document.createElement("div");
+    document.body.appendChild(tempElement);
+    tempElement.focus();
+    document.body.removeChild(tempElement);
   };
 
   useEffect(() => {
@@ -89,7 +98,12 @@ const Weather = () => {
   return (
     <div className="weather">
       <div className="search-bar">
-        <input type="text" ref={inputRef} placeholder="Enter your city name" onKeyUp={handleKeyPress}/>
+        <input
+          type="text"
+          ref={inputRef}
+          placeholder="Enter your city name"
+          onKeyUp={handleKeyPress}
+        />
         <img
           src={search_icon}
           alt="Search icon"
@@ -100,7 +114,10 @@ const Weather = () => {
       {weatherData ? (
         <>
           <img src={weatherData.icon} alt="" className="weather-icon" />
-          <p className="temperature">{Math.floor(weatherData.temperature)}<sup>°</sup>C</p>
+          <p className="temperature">
+            {Math.floor(weatherData.temperature)}
+            <sup>°</sup>C
+          </p>
           <p className="location">{weatherData.location}</p>
           <div className="weather-data">
             <div className="col">
@@ -113,14 +130,17 @@ const Weather = () => {
             <div className="col">
               <img src={feels_like_icon} alt="" />
               <div>
-                <p>{Math.floor(weatherData.feels_like)}<sup>°</sup>C</p>
+                <p>
+                  {Math.floor(weatherData.feels_like)}
+                  <sup>°</sup>C
+                </p>
                 <span>Feels like</span>
               </div>
             </div>
             <div className="col">
               <img src={visibility_icon} alt="" />
               <div>
-                <p>{Math.ceil(weatherData.visibility/1000)} km</p>
+                <p>{Math.ceil(weatherData.visibility / 1000)} km</p>
                 <span>Visibility</span>
               </div>
             </div>
