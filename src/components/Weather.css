@@ -126,11 +126,11 @@
     /*extra*/
     .weather-icon {
         width: 20vh;
-        margin: 1vh;
+        margin: 3vh;
     }
 
     .weather-data{
-        margin: 2vh;
+        margin: 5vh;
     }
 
     .weather-data .col {
