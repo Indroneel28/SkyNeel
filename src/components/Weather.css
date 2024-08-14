@@ -87,6 +87,7 @@
         height: 95vh;
         width: 90vw;
         border-radius: 20px;
+        padding: 2vh 8vw;
         overflow-y: scroll;
         overflow-x: hidden;
         /* Hide scrollbar for IE, Edge and Firefox */
@@ -125,6 +126,11 @@
     /*extra*/
     .weather-icon {
         width: 20vh;
+        margin: 1vh;
+    }
+
+    .weather-data{
+        margin: 2vh;
     }
 
     .weather-data .col {

@@ -94,7 +94,7 @@ const Weather = () => {
           src={search_icon}
           alt="Search icon"
           ref={searchRef}
-          onClick={() => search(inputRef.current.value)}
+          onClick={() => search(inputRef.current.value.trim())}
         />
       </div>
       {weatherData ? (
